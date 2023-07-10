@@ -27,8 +27,9 @@
 
 + (void)checkServiceStatus:(enum PermissionGroup)permission result:(FlutterResult)result {
     id <PermissionStrategy> permissionStrategy = [PermissionManager createPermissionStrategy:permission];
-    ServiceStatus status = [permissionStrategy checkServiceStatus:permission];
-    result([Codec encodeServiceStatus:status]);
+    [permissionStrategy checkServiceStatus:permission completionHandler:^(ServiceStatus serviceStatus) {
+        result([Codec encodeServiceStatus:serviceStatus]);
+    }];
 }
 
 - (void)requestPermissions:(NSArray *)permissions completion:(PermissionRequestCompletion)completion {
