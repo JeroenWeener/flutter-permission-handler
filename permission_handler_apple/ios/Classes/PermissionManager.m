@@ -9,6 +9,8 @@
     NSMutableArray <id <PermissionStrategy>> *_strategyInstances;
 }
 
+static id <PermissionStrategy> _pendingPermissionStrategy;
+
 - (instancetype)initWithStrategyInstances {
     self = [super init];
     if (self) {
@@ -26,8 +28,9 @@
 }
 
 + (void)checkServiceStatus:(enum PermissionGroup)permission result:(FlutterResult)result {
-    id <PermissionStrategy> permissionStrategy = [PermissionManager createPermissionStrategy:permission];
-    [permissionStrategy checkServiceStatus:permission completionHandler:^(ServiceStatus serviceStatus) {
+    _pendingPermissionStrategy = [PermissionManager createPermissionStrategy:permission];
+    
+    [_pendingPermissionStrategy checkServiceStatus:permission completionHandler:^(ServiceStatus serviceStatus) {
         result([Codec encodeServiceStatus:serviceStatus]);
     }];
 }
