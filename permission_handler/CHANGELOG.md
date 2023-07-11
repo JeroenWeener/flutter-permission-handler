@@ -1,3 +1,7 @@
+## 10.4.3
+
+* Adds iOS support checking whether Bluetooth service is enabled through `Permission.bluetooth.serviceStatus`.
+
 ## 10.4.2
 
 * Adds a [FAQ](https://pub.dev/packages/permission_handler#faq) section to the README.md file.
